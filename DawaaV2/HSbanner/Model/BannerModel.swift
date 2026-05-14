@@ -30,12 +30,20 @@ struct BannerComponent:Codable
     let urlLink: String?
     let container: String?
     let mobilelLinkUrl: String?
+    let hiddenOnMobile: String?
+    let hiddenOnStoreFront: String?
+    let synchronizationBlocked: String?
+    let multiResponsiveBannerComponent: String?
+    let children: String?
+    let parents: String?
 }
+
 struct BannerMedia: Codable
 {
     let mobile: BannerImage?
     let widescreen: BannerImage?
 }
+
 struct BannerImage: Codable
 {
     let code: String?

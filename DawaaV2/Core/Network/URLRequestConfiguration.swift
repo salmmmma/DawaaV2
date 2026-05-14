@@ -19,26 +19,12 @@ protocol URLRequestConfiguration: URLRequestConvertible {
 
 extension URLRequestConfiguration {
     
-    var scheme: String {
-        return "https"
-    }
-    
-    var host: String {
-        return "stgprevapi.al-dawaa.com"
-    }
-    
-    var headers: HTTPHeaders {
-        return [
-            "Accept": "application/json",
-            "Content-Type": "application/json"
-        ]
-    }
     
     func asURLRequest() throws -> URLRequest {
         var components = URLComponents()
-        components.scheme = scheme
-        components.host = host
-        components.path = path
+        components.scheme = APIConfig.scheme
+        components.host = APIConfig.host
+        components.path = APIConfig.basePath + path
         components.queryItems = queryItems
         
         guard let url = components.url else {
