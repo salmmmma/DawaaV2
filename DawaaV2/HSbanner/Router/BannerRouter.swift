@@ -30,7 +30,18 @@ enum BannerRouter: URLRequestConfiguration {
         switch self {
         case .getBanners(let ids):
             return [
-                URLQueryItem(name: "componentIds", value: ids.joined(separator: ",")),
+                URLQueryItem(
+                                    name: "componentIds",
+                                    value: """
+                                    cmsitem_00083000,
+                                    cmsitem_00083002,
+                                    cmsitem_00083001,
+                                    cmsitem_00083003,
+                                    cmsitem_00083005
+                                    """
+                                    .replacingOccurrences(of: "\n", with: "")
+                                    .replacingOccurrences(of: " ", with: "")
+                                ),
                 URLQueryItem(name: "fields", value: "FULL"),
                 URLQueryItem(name: "lang", value: "en")
             ]
