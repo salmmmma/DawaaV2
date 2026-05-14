@@ -12,7 +12,7 @@ import Combine
 class BannerViewModel: ObservableObject {
     
     
-    @Published var state: UIStateBanner = .idel
+    @Published var state: UIState<[BannerComponent]> = .idle
     
     private let repository: BannerRepositoryProtocol
         init(repository: BannerRepositoryProtocol = BannerRepository()) {
