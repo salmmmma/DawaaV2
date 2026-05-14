@@ -6,49 +6,73 @@
 //
 
 
+import SwiftUI
+
 struct BannerHomeView: View {
+
     @StateObject private var viewModel = BannerViewModel()
-    
+
     var body: some View {
-        VStack(alignment: .leading) {
-            Text("العروض المميزة")
-                .font(.title2)
+        VStack(alignment: .leading, spacing: 15) {
+
+            Text("Top Offers")
+                .font(.title3)
                 .bold()
-                .padding(.leading)
-            
+                .padding(.horizontal)
+
             switch viewModel.state {
+
             case .idle:
-                Color.clear.onAppear {
-                    viewModel.fetchBanners(ids: ["1", "2", "3"])
-                }
-                
+                Color.clear
+                    .frame(height: 200)
+                    .onAppear {
+                        viewModel.fetchBanners(ids: Constants.BannerIDs.homePage)
+                    }
+
             case .loading:
                 HStack {
                     Spacer()
-                    ProgressView()
+                    ProgressView("Loading...")
                     Spacer()
                 }
                 .frame(height: 200)
-                
+
             case .success(let banners):
-                // الـ Horizontal Scroll مع ميزة الـ Paging
-                ScrollView(.horizontal, showsIndicators: false) {
-                    HStack(spacing: 0) {
-                        ForEach(banners, id: \.uid) { banner in
-                            BannerItemView(banner: banner)
-                                .containerRelativeFrame(.horizontal) // بيخلي البنر ياخد عرض الشاشة
+                if banners.isEmpty {
+                    Text("No offers available")
+                        .foregroundColor(.gray)
+                        .frame(maxWidth: .infinity, minHeight: 120)
+                } else {
+                    ScrollView(.horizontal, showsIndicators: false) {
+                        HStack(spacing: 12) {
+                            ForEach(banners, id: \.uid) { banner in
+                                BannerItemView(banner: banner)
+                            }
                         }
+                        .padding(.horizontal, 16)
                     }
-                    .scrollTargetLayout() // ضروري عشان الـ Paging يشتغل
                 }
-                .scrollTargetBehavior(.paging) // بيخلي السكرول يقلب بنر بنر
-                .frame(height: 200)
-                
+
             case .error(let message):
-                Text(message)
-                    .foregroundColor(.red)
-                    .padding()
+                VStack(spacing: 10) {
+                    Image(systemName: "exclamationmark.icloud")
+                        .font(.largeTitle)
+                        .foregroundColor(.red)
+                    Text(message)
+                        .font(.subheadline)
+                        .multilineTextAlignment(.center)
+                    Button("Retry") {
+                        viewModel.fetchBanners(ids: Constants.BannerIDs.homePage)
+                    }
+                    .buttonStyle(.bordered)
+                }
+                .frame(maxWidth: .infinity, minHeight: 200)
             }
         }
+        .padding(.vertical)
     }
+}
+
+#Preview {
+    BannerHomeView()
 }
