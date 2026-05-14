@@ -31,11 +31,13 @@ struct BannerComponent:Codable
     let container: String?
     let mobilelLinkUrl: String?
 }
-struct BannerMedia: Codable {
+struct BannerMedia: Codable
+{
     let mobile: BannerImage?
     let widescreen: BannerImage?
 }
-struct BannerImage: Codable {
+struct BannerImage: Codable
+{
     let code: String?
     let catalogId: String?
     let mime: String?
