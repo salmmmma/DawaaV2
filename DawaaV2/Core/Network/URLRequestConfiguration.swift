@@ -24,7 +24,7 @@ extension URLRequestConfiguration {
         var components = URLComponents()
         components.scheme = APIConfig.scheme
         components.host = APIConfig.host
-        components.path = APIConfig.basePath
+        components.path = APIConfig.basePath + path
         components.queryItems = queryItems
         
         guard let url = components.url else {

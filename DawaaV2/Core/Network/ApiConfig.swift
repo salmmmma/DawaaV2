@@ -8,6 +8,7 @@
 import Foundation
 enum APIConfig {
     static let scheme = "https"
-    static let host = "your-domain.com"
-    static let basePath = "/api"
+    static let host  = "stgprevapi.al-dawaa.com"
+    static let basePath = ""
+    static let mediaBaseURL = "https://stgprevapi.al-dawaa.com" 
 }
