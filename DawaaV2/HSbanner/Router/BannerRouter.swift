@@ -4,7 +4,6 @@
 //
 //  Created by Mohammed Hassanien on 14/05/2026.
 //
-
 import Foundation
 import Alamofire
 
@@ -12,6 +11,10 @@ enum BannerRouter: URLRequestConfiguration {
     
     case getBanners(ids: [String])
     
+    var baseURL: String {
+        return APIConfig.basePath
+    }
+
     var method: HTTPMethod {
         switch self {
         case .getBanners:
@@ -26,29 +29,23 @@ enum BannerRouter: URLRequestConfiguration {
         }
     }
     
+    var parameters: Parameters? {
+        return nil
+    }
+
+    var headers: HTTPHeaders {
+        return [:]
+    }
+    
     var queryItems: [URLQueryItem]? {
         switch self {
         case .getBanners(let ids):
+            let formattedIds = ids.joined(separator: ",")
             return [
-                URLQueryItem(
-                                    name: "componentIds",
-                                    value: """
-                                    cmsitem_00083000,
-                                    cmsitem_00083002,
-                                    cmsitem_00083001,
-                                    cmsitem_00083003,
-                                    cmsitem_00083005
-                                    """
-                                    .replacingOccurrences(of: "\n", with: "")
-                                    .replacingOccurrences(of: " ", with: "")
-                                ),
+                URLQueryItem(name: "componentIds", value: formattedIds),
                 URLQueryItem(name: "fields", value: "FULL"),
                 URLQueryItem(name: "lang", value: "en")
             ]
         }
-    }
-    
-    var parameters: Parameters? {
-        return nil
     }
 }
